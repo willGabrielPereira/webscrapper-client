@@ -1,0 +1,8 @@
+{
+    "require": {
+        "slim/slim": "4.*",
+        "illuminate/database": "^8.83",
+        "guzzlehttp/psr7": "^2",
+        "larapack/dd": "^1.1"
+    }
+}
