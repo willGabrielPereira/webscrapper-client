@@ -1,23 +1,48 @@
 <?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Factory\AppFactory;
+require __DIR__.'/vendor/autoload.php';
 
-require __DIR__ . '/vendor/autoload.php';
+$app = new \Slim\App(['settings' => [
+    'db' => [
+        'driver' => 'mysql',
+        'host' => 'localhost',
+        'username' => 'root',
+        'password' => '',
+        'database' => 'bdtest',
+        'charset'   => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+        'prefix'    => '',
+    ],
+    'displayErrorDetails' => true,
+    'addContentLengthHeader' => false
+]]);
 
-$app = AppFactory::create();
 
-$app->get('/', function (Request $request, Response $response, $args) {
-    $response->getBody()->write("Hello world!");
+$container = $app->getContainer();
+$container['db'] = function ($container) {
+    $capsule = new \Illuminate\Database\Capsule\Manager;
+    $capsule->addConnection($container['settings']['db']);
+
+    $capsule->setAsGlobal();
+    $capsule->bootEloquent();
+
+    return $capsule;
+};
+
+
+$app->get('/', function (Request $request, Response $response, array $args) {
+    $response->getBody()->write("Hello World");
+
     return $response;
 });
 
-$app->get('/fruits', function (Request $request, Response $response, $args) {
-    dd($request);
-    $fruits = ['banana', 'laranja', 'tomate'];
-    $response->getBody()->write(json_encode($fruits));
-    return $response->withHeader('Content-Type', 'application/json');
+$app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
+    $name = $args['name'];
+    $response->getBody()->write("Hello, $name");
+
+    return $response;
 });
 
 $app->run();
