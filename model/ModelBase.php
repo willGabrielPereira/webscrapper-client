@@ -6,8 +6,8 @@ class ModelBase
 {
     protected $table;
     protected $primaryKey = 'id';
-    protected $makeIdFrom;
     protected $attributes;
+    protected $app;
 
     private $db;
 
@@ -21,6 +21,7 @@ class ModelBase
             $className = explode('\\', get_class($this));
             $this->table = strtolower(end($className));
         }
+        $this->app = $app;
         $this->db = $app->getcontainer()->get('db')->table($this->table);
 
 
@@ -106,7 +107,7 @@ class ModelBase
         if (is_callable([$this, ($mutator = 'set' . ucfirst($name))]))
             $this->$mutator($value);
         else
-            $this->attributes[$name] = $value;
+            @$this->attributes[$name] = $value;
     }
 
     public function __get(string $name)

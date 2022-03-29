@@ -9,8 +9,8 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 $app->get('/', function (Request $request, Response $response, array $args) use ($app) {
     $biddings = (new Bidding($app))->db()->get();
-    $response = $this->view->render($response, 'biddingView.php', ['biddings' => $bidding]);
-    // $response->getBody()->write(require __DIR__.'/../view/biddingView.php'($biddings));
+    $body = require __DIR__ . '/../templates/biddingView.php';
+    $response->getBody()->write($body($biddings, $app));
 
     return $response;
 });
@@ -106,15 +106,15 @@ $app->post('/populate', function (Request $request, Response $response, array $a
 
     $bidding->save();
 
-    foreach($data['files'] as $file) {
+    foreach ($data['files'] as $file) {
         $file = new File($app, array_merge(['bidding_id' => $bidding->id], $file));
 
         if (($id = $file->db()->where('name', $file->name)->where('date', $file->date)->first()) && ($id = $id->id))
             $file->id = $id;
         $file->save();
     }
-    
-    foreach($data['historical'] as $history) {
+
+    foreach ($data['historical'] as $history) {
         $history = new History($app, array_merge(['bidding_id' => $bidding->id], $history));
 
         if (($id = $history->db()->where('status', $history->status)->where('date', $history->date)->first()) && ($id = $id->id))
