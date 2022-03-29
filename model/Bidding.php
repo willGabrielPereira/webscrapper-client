@@ -11,7 +11,6 @@ class Bidding extends ModelBase
         'status',
         'description',
         'date',
-        'bidding_id'
     ];
 
     public function files()
@@ -24,6 +23,6 @@ class Bidding extends ModelBase
 
     public function setDate($date)
     {
-        $this->attributes['date'] = date('Y-m-d H:i:s', strtotime($date));
+        $this->attributes['date'] = date('Y-m-d H:i:s', (int)$date);
     }
 }

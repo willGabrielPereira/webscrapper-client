@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '562bbf8eaa9935ad619aed1bcbb1f0503679a51b',
+        'reference' => '4857dc6875c24c41e1b05d7ca835a63c0803fedd',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '562bbf8eaa9935ad619aed1bcbb1f0503679a51b',
+            'reference' => '4857dc6875c24c41e1b05d7ca835a63c0803fedd',
             'dev_requirement' => false,
         ),
         'doctrine/inflector' => array(
@@ -131,6 +131,15 @@
             'install_path' => __DIR__ . '/../psr/simple-cache',
             'aliases' => array(),
             'reference' => '408d5eafb83c57f6365a3ca330ff23aa4a5fa39b',
+            'dev_requirement' => false,
+        ),
+        'slim/php-view' => array(
+            'pretty_version' => '3.1.0',
+            'version' => '3.1.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../slim/php-view',
+            'aliases' => array(),
+            'reference' => 'c9ec5e4027d113af35816098f9059ef5c3e3000c',
             'dev_requirement' => false,
         ),
         'slim/slim' => array(

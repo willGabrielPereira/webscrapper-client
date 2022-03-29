@@ -11,3 +11,5 @@ $container['db'] = function ($container) {
 
     return $capsule;
 };
+
+$container['view'] = new \Slim\Views\PhpRenderer('../templates/');

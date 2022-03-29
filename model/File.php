@@ -15,6 +15,6 @@ class File extends ModelBase
 
     public function setDate($date)
     {
-        $this->attributes['date'] = date('Y-m-d H:i:s', strtotime($date));
+        $this->attributes['date'] = date('Y-m-d H:i:s', (int)$date);
     }
 }

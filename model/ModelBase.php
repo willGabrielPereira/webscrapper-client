@@ -100,7 +100,7 @@ class ModelBase
 
     public function __set(string $name, $value)
     {
-        if (!in_array($name, (array)$this->fillable))
+        if (!in_array($name, (array)$this->fillable) && $this->primaryKey != $name)
             return;
 
         if (is_callable([$this, ($mutator = 'set' . ucfirst($name))]))
@@ -111,7 +111,7 @@ class ModelBase
 
     public function __get(string $name)
     {
-        if (!in_array($name, (array)$this->fillable) && $this->primaryKey != $name || !in_array($name, (array)$this->attributes))
+        if (!in_array($name, (array)$this->fillable) && $this->primaryKey != $name && !in_array($name, (array)$this->attributes))
             return;
 
         return $this->attributes[$name];
@@ -119,7 +119,7 @@ class ModelBase
 
     public function __isset(string $name)
     {
-        if (!in_array($name, (array)$this->fillable) && $this->primaryKey != $name || !in_array($name, (array)$this->attributes))
+        if (!in_array($name, (array)$this->fillable) && $this->primaryKey != $name && !in_array($name, (array)$this->attributes))
             return false;
 
         return isset($this->attributes[$name]);
@@ -127,7 +127,7 @@ class ModelBase
 
     public function __unset(string $name)
     {
-        if (!in_array($name, (array)$this->fillable) && $this->primaryKey != $name || !in_array($name, (array)$this->attributes))
+        if (!in_array($name, (array)$this->fillable) && $this->primaryKey != $name && !in_array($name, (array)$this->attributes))
             return;
 
         unset($this->attributes[$name]);
